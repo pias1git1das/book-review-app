@@ -1,56 +1,55 @@
 const express = require ('express'); 
 const router = express.Router(); 
-const Article = require('../models/article'); 
+const Book = require('../models/book'); 
 
-router.get('/articles', function(req, res) { 
-  Article.find(function(err, articles) {
-    res.json(articles);
+router.get('/books', function(req, res) { 
+  Book.find(function(err, books) {
+    res.json(books);
   });
 });
 
-router.get('/articles/:id', function(req, res) {  
-  Article.findById(req.params.id, function(err, article) {
-    if (!article) {
+router.get('/books/:id', function(req, res) {  
+  Book.findById(req.params.id, function(err, book) {
+    if (!book) {
       res.status(404).send('No result found');
     } else {
-      res.json(article);
+      res.json(book);
     }
   });
 });
 
-router.post('/articles', function(req, res) {     
-  let article = new Article(req.body);
-  article.save()
-    .then(article => {
-      res.send(article);
+router.post('/books', function(req, res) { 
+  let book = new Book(req.body);
+  book.save()
+    .then(book => {
+      res.send(book);
     })
     .catch(function(err) {
-      res.status(422).send('Article add failed');
+      res.status(422).send('Book add failed');
     });
 });
 
-router.patch('/articles/:id', function(req, res){    
-  Article.findByIdAndUpdate(req.params.id, req.body)
+router.patch('/books/:id', function(req, res){    
+  Book.findByIdAndUpdate(req.params.id, req.body)
     .then(function() {
-      res.json('Article updated');
+      res.json('Book updated');
     })
     .catch(function(err) {
-      res.status(422).send("Article update failed.");
+      res.status(422).send("Book update failed.");
     });
 });
 
-router.delete('/articles/:id', function(req, res) {  
-  Article.findById(req.params.id, function(err, article) {
-    if (!article) {
-      res.status(404).send('Article not found');
+router.delete('/books/:id', function(req, res) {  
+  Book.findById(req.params.id, function(err, book) {
+    if (!book) {
+      res.status(404).send('Book not found');
     } else {
-      Article.findByIdAndRemove(req.params.id)
-        .then(function() { res.status(200).json("Article deleted") })
+      Book.findByIdAndRemove(req.params.id)
+        .then(function() { res.status(200).json("Book deleted") })
         .catch(function(err) {
-          res.status(400).send("Article delete failed.");
+          res.status(400).send("Book delete failed.");
         })
     }
   });
-})
 
 module.exports = router;   

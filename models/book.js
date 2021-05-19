@@ -1,6 +1,8 @@
+
 const mongoose = require('mongoose');
 
-const articleSchema = new mongoose.Schema({ 
+
+const bookSchema = new mongoose.Schema({ 
   title: {
     type: String,
     required: [true, "Title is required"]
@@ -8,7 +10,11 @@ const articleSchema = new mongoose.Schema({
   content: {
     type: String,
     required: [true, "Content can't be blank"]
+  },
+  tag: {
+    type: String,
+    required: [true, "Tag is required"]
   }
 });
 
-module.exports = mongoose.model('Article', articleSchema); 
+module.exports = mongoose.model('Book', bookSchema); 
